@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de Boda - Ale & Facu</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="couple-names">
+                <h1 class="name">Alejandra</h1>
+                <div class="ampersand">&</div>
+                <h1 class="name">Facundo</h1>
+            </div>
+            <p class="wedding-date">15 de Junio, 2024</p>
+            <p class="invitation-text">Tienen el honor de invitarte a celebrar su unión</p>
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+        <div class="hero-background">
+            <div class="floating-hearts">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wedding Details -->
+    <section class="wedding-details">
+        <div class="container">
+            <h2>Detalles de la Celebración</h2>
+            <div class="details-grid">
+                <div class="detail-card">
+                    <div class="icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Fecha</h3>
+                    <p>15 de Junio, 2024</p>
+                </div>
+                <div class="detail-card">
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Hora</h3>
+                    <p>19:00 hs</p>
+                </div>
+                <div class="detail-card">
+                    <div class="icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Lugar</h3>
+                    <p>Salón Los Robles<br>Av. Principal 1234, CABA</p>
+                </div>
+                <div class="detail-card">
+                    <div class="icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Recepción</h3>
+                    <p>Cena y baile incluidos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Love Story -->
+    <section class="love-story">
+        <div class="container">
+            <h2>Nuestra Historia</h2>
+            <div class="story-content">
+                <div class="story-text">
+                    <p>Se conocieron en una tarde de primavera en el parque, cuando Ale estaba leyendo su libro favorito y Facu pasaba corriendo por su rutina diaria. Un encuentro casual que cambió sus vidas para siempre.</p>
+                    <p>Después de tres años de risas, aventuras y amor incondicional, decidieron unir sus vidas en matrimonio. Hoy quieren compartir esta celebración especial con las personas más importantes de sus vidas.</p>
+                </div>
+                <div class="story-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-heart"></i>
+                        <p>Foto de la pareja</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="rsvp">
+        <div class="container">
+            <h2>Confirma tu Asistencia</h2>
+            <p class="rsvp-subtitle">Por favor, confirma tu asistencia antes del 1 de Mayo</p>
+            <form class="rsvp-form" id="rsvpForm">
+                <div class="form-group">
+                    <label for="name">Nombre completo</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="guests">Número de invitados</label>
+                    <select id="guests" name="guests" required>
+                        <option value="">Selecciona...</option>
+                        <option value="1">Solo yo</option>
+                        <option value="2">2 personas</option>
+                        <option value="3">3 personas</option>
+                        <option value="4">4 personas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="attendance">¿Asistirás?</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="attendance" value="yes" required>
+                            <span>¡Por supuesto que sí!</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="attendance" value="no" required>
+                            <span>Lamentablemente no podré</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Mensaje para los novios (opcional)</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Escribe un mensaje especial..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Confirmar Asistencia</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>¡Esperamos verte en nuestra celebración!</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="footer-text">Con amor, Ale & Facu</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
