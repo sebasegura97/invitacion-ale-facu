@@ -31,6 +31,7 @@ interface TextDrawProps {
   className?: string;
   size?: TextSize;
   responsive?: boolean;
+  reverse?: boolean; // Nueva prop para animación reversa
 }
 
 export default function TextDraw({
@@ -40,6 +41,7 @@ export default function TextDraw({
   className = "",
   size = "4xl",
   responsive = false,
+  reverse = false,
 }: TextDrawProps) {
   const sizeConfig: SizeConfig = {
     xs: {
@@ -92,13 +94,13 @@ export default function TextDraw({
     },
     "5xl": {
       class: "text-5xl",
-      minHeight: "45px",
+      minHeight: "60px",
       lineHeight: "1.1",
       letterSpacing: "0.025em",
     },
     "6xl": {
       class: "text-6xl",
-      minHeight: "53px",
+      minHeight: "72px",
       lineHeight: "1.0",
       letterSpacing: "0.025em",
     },
@@ -137,16 +139,14 @@ export default function TextDraw({
           lineHeight: sizeConfig.lineHeight,
           letterSpacing: sizeConfig.letterSpacing,
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
         }}
       >
         {/* Texto base (invisible) para mantener el espacio */}
-        <div className="opacity-0 text-center w-full">{children}</div>
+        <div className="opacity-0 w-full">{children}</div>
 
         {/* Texto que se va revelando con efecto de escritura */}
         <motion.div
-          className="absolute inset-0 flex items-center justify-center text-center"
+          className="absolute inset-0 flex items-center justify-center "
           style={{
             clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)",
           }}
@@ -161,18 +161,6 @@ export default function TextDraw({
         >
           {children}
         </motion.div>
-
-        {/* Efecto de brillo sutil al final */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 pointer-events-none"
-          initial={{ x: "-100%" }}
-          animate={{ x: "100%" }}
-          transition={{
-            duration: 0.6,
-            delay: delay + duration * 0.9,
-            ease: "easeInOut",
-          }}
-        />
       </motion.div>
     </div>
   );

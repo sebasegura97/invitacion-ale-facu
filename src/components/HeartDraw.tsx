@@ -8,14 +8,16 @@ type Props = {
   strokeWidth?: number; // grosor del trazo
   duration?: number; // duración del dibujo (s)
   loop?: boolean; // si se repite ida y vuelta
+  delay?: number; // delay del dibujo (s)
 };
 
 export default function HeartDraw({
-  size = 240,
-  stroke = "#E11D48", // tailwind rose-600
+  size = 80,
+  stroke = "var(--foreground)", // tailwind rose-600
   strokeWidth = 8,
   duration = 2.0,
   loop = true,
+  delay = 0,
 }: Props) {
   const [currentPath, setCurrentPath] = React.useState(0);
   // Path del corazón usando las coordenadas exactas del SVG heart.svg
@@ -55,7 +57,7 @@ export default function HeartDraw({
           transition={{
             duration: duration / 2,
             ease: "easeInOut",
-            delay: 0,
+            delay,
           }}
         />
 
@@ -74,7 +76,7 @@ export default function HeartDraw({
           transition={{
             duration: duration / 2,
             ease: "easeInOut",
-            delay: currentPath >= 1 ? 0 : duration / 2,
+            delay: currentPath >= 1 ? 0 : duration / 2 + delay,
           }}
         />
       </motion.svg>

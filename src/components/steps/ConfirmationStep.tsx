@@ -1,7 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle } from "lucide-react";
+import { Calendar } from "lucide-react";
+import { WEDDING_CONFIG } from "@/lib/wedding-config";
+import TextDraw from "@/components/TextDraw";
+import AnimatedIcon from "@/components/AnimatedIcon";
 import ConfirmationForm from "@/components/ConfirmationForm";
 
 interface ConfirmationStepProps {
@@ -18,60 +21,25 @@ export default function ConfirmationStep({ onConfirm }: ConfirmationStepProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white p-8 rounded-lg shadow-lg"
+      className="p-2 text-center"
     >
-      <div className="text-center mb-8">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="flex items-center justify-center mb-6"
+      <div className="flex items-center justify-center mb-6">
+        <AnimatedIcon Icon={Calendar} delay={0.5} />
+        <TextDraw
+          delay={0.5}
+          duration={1.5}
+          size="md"
+          className="text-gray-400"
         >
-          <CheckCircle className="w-8 h-8 text-wedding-text mr-3" />
-          <h2 className="text-3xl font-semibold text-wedding-text">
-            Confirma tu Asistencia
-          </h2>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="text-lg text-gray-700"
-        >
-          <p className="mb-4">
-            ¡Esperamos verte en nuestro día especial! Por favor confirma tu
-            asistencia para que podamos organizar todo perfectamente.
-          </p>
-          <p className="text-sm text-gray-600">
-            Tu confirmación nos ayuda a planificar la celebración de la mejor
-            manera.
-          </p>
-        </motion.div>
+          {`expira el  ${WEDDING_CONFIG.confirmationDateLimit}`}
+        </TextDraw>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-      >
-        <ConfirmationForm onConfirm={onConfirm} />
-      </motion.div>
+      <TextDraw delay={2} duration={1.5} size="4xl" className="mb-8">
+        Confirma tu Asistencia
+      </TextDraw>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="mt-8 bg-green-50 p-4 rounded-lg"
-      >
-        <h3 className="font-semibold text-wedding-text mb-2 text-center">
-          📅 Fecha límite de confirmación
-        </h3>
-        <p className="text-sm text-gray-700 text-center">
-          Por favor confirma tu asistencia antes del <strong>1 de junio</strong>{" "}
-          para que podamos hacer los arreglos finales.
-        </p>
-      </motion.div>
+      <ConfirmationForm onConfirm={onConfirm} />
     </motion.div>
   );
 }

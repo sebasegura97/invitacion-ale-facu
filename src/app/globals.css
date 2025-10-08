@@ -17,3 +17,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Sprite Animation Keyframes */
+@keyframes spriteMove {
+  0% {
+    background-position: -32768px 0px;
+  }
+  100% {
+    background-position: 0px 0px;
+  }
+}

@@ -1,17 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import StepContainer from "@/components/StepContainer";
+import InitialStep from "@/components/steps/InitialStep";
 import WelcomeStep from "@/components/steps/WelcomeStep";
 import DateTimeStep from "@/components/steps/DateTimeStep";
-import LocationStep from "@/components/steps/LocationStep";
-import DressCodeStep from "@/components/steps/DressCodeStep";
 import GiftsStep from "@/components/steps/GiftsStep";
 import ConfirmationStep from "@/components/steps/ConfirmationStep";
-import { WEDDING_CONFIG } from "@/lib/wedding-config";
+import BackgroundMusic, {
+  BackgroundMusicRef,
+} from "@/components/BackgroundMusic";
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
+  const musicRef = useRef<BackgroundMusicRef>(null);
 
   const handleConfirm = async (data: {
     name: string;
@@ -46,6 +48,10 @@ export default function Home() {
     }
   };
 
+  const handleStartMusic = () => {
+    musicRef.current?.play();
+  };
+
   const handlePrevious = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
@@ -55,30 +61,38 @@ export default function Home() {
   const renderCurrentStep = () => {
     switch (currentStep) {
       case 0:
-        return <WelcomeStep />;
+        return (
+          <InitialStep
+            userName="Sebastián Segura"
+            onNext={handleNext}
+            onStartMusic={handleStartMusic}
+          />
+        );
       case 1:
-        return <DateTimeStep config={WEDDING_CONFIG} />;
+        return <WelcomeStep onNext={handleNext} />;
       case 2:
-        return <LocationStep config={WEDDING_CONFIG} />;
+        return <DateTimeStep onNext={handleNext} onPrevious={handlePrevious} />;
       case 3:
-        return <DressCodeStep config={WEDDING_CONFIG} />;
-      case 4:
-        return <GiftsStep config={WEDDING_CONFIG} />;
-      case 5:
         return <ConfirmationStep onConfirm={handleConfirm} />;
+      case 4:
+        return <GiftsStep />;
       default:
-        return <WelcomeStep />;
+        return (
+          <InitialStep
+            userName="Sebastián Segura"
+            onNext={handleNext}
+            onStartMusic={handleStartMusic}
+          />
+        );
     }
   };
 
   return (
-    <StepContainer
-      currentStep={currentStep}
-      totalSteps={6}
-      onNext={handleNext}
-      onPrevious={handlePrevious}
-    >
-      {renderCurrentStep()}
-    </StepContainer>
+    <>
+      <StepContainer currentStep={currentStep}>
+        {renderCurrentStep()}
+      </StepContainer>
+      <BackgroundMusic ref={musicRef} />
+    </>
   );
 }
