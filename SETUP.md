@@ -24,13 +24,13 @@ Crea un archivo `.env.local` en la raíz del proyecto con las siguientes variabl
 
 ```env
 # Database
-POSTGRES_URL="your_postgres_url_here"
-POSTGRES_PRISMA_URL="your_postgres_prisma_url_here"
-POSTGRES_URL_NON_POOLING="your_postgres_non_pooling_url_here"
-POSTGRES_USER="your_postgres_user"
-POSTGRES_HOST="your_postgres_host"
-POSTGRES_PASSWORD="your_postgres_password"
-POSTGRES_DATABASE="your_postgres_database"
+DATABASE_URL="your_DATABASE_url_here"
+DATABASE_PRISMA_URL="your_DATABASE_prisma_url_here"
+DATABASE_URL_NON_POOLING="your_DATABASE_non_pooling_url_here"
+DATABASE_USER="your_DATABASE_user"
+DATABASE_HOST="your_DATABASE_host"
+DATABASE_PASSWORD="your_DATABASE_password"
+DATABASE_DATABASE="your_DATABASE_database"
 
 # Google Maps API (opcional - para mapas mejorados)
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="your_google_maps_api_key_here"

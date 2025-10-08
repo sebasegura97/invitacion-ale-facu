@@ -1,4 +1,6 @@
-import { sql } from "@vercel/postgres";
+import { neon } from "@neondatabase/serverless";
+
+const sql = neon(process.env.DATABASE_URL!);
 
 export interface Invitation {
   id: number;
@@ -15,7 +17,7 @@ export async function getInvitationByCode(
   code: string
 ): Promise<Invitation | null> {
   try {
-    const { rows } = await sql`
+    const rows = await sql`
       SELECT * FROM invitations 
       WHERE code = ${code.toUpperCase()} 
       LIMIT 1
@@ -33,7 +35,7 @@ export async function confirmInvitation(
   message?: string
 ): Promise<Invitation | null> {
   try {
-    const { rows } = await sql`
+    const rows = await sql`
       UPDATE invitations 
       SET confirmed = ${confirmedCount},
           message = ${message || null},
@@ -51,7 +53,7 @@ export async function confirmInvitation(
 
 export async function getAllInvitations(): Promise<Invitation[]> {
   try {
-    const { rows } = await sql`SELECT * FROM invitations ORDER BY name`;
+    const rows = await sql`SELECT * FROM invitations ORDER BY name`;
     return rows as Invitation[];
   } catch (error) {
     console.error("Error fetching invitations:", error);

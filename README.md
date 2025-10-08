@@ -1,36 +1,158 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💍 Invitación de Boda Digital - Ale & Facu
 
-## Getting Started
+Aplicación web de invitación de boda personalizada con sistema de códigos únicos para cada invitado.
 
-First, run the development server:
+## ✨ Características
+
+- 🎨 **Diseño elegante** con animaciones suaves usando Framer Motion
+- 🎵 **Música de fondo** automática
+- 🔐 **Códigos personalizados** de 6 letras para cada invitado/familia
+- 📝 **Formulario de confirmación** con límite de invitados
+- 💬 **Mensajes opcionales** para los novios
+- 📍 **Información del evento** con ubicación
+- 🎁 **Sección de regalos** con cuentas bancarias
+- 📱 **100% Responsive** (funciona en móviles, tablets y desktop)
+
+## 🚀 Inicio Rápido
+
+### 1. Instalar Dependencias
+
+```bash
+npm install
+```
+
+### 2. Configurar Base de Datos
+
+Crea un archivo `.env.local` en la raíz con tu connection string de Neon:
+
+```env
+DATABASE_URL="postgresql://user:password@ep-xxx.neon.tech/dbname?sslmode=require"
+```
+
+📖 **Ver guía detallada:** [NEON_SETUP.md](./NEON_SETUP.md)
+
+### 3. Crear la Tabla
+
+```bash
+npm run init-db
+```
+
+### 4. Generar Códigos de Invitación
+
+```bash
+npm run generate-codes 10
+```
+
+### 5. Insertar Invitaciones
+
+Copia el SQL generado y ejecútalo en [Neon SQL Editor](https://console.neon.tech)
+
+### 6. Ejecutar en Desarrollo
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000) y prueba con uno de tus códigos.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📚 Documentación
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 📘 [Configuración de Neon Database](./NEON_SETUP.md)
+- 📗 [Gestión de Invitaciones](./INVITATIONS_SETUP.md)
+- 📙 [Deploy a Vercel](./VERCEL_DEPLOY.md)
 
-## Learn More
+## 🛠️ Stack Tecnológico
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework:** [Next.js 15](https://nextjs.org/) con App Router
+- **Lenguaje:** TypeScript
+- **Base de Datos:** [Neon Database](https://neon.tech/) (Postgres serverless)
+- **Estilos:** Tailwind CSS 4
+- **Animaciones:** Framer Motion
+- **Hosting:** Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Scripts Disponibles
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev          # Ejecutar en modo desarrollo
+npm run build        # Construir para producción
+npm run start        # Ejecutar build de producción
+npm run init-db      # Crear tabla en la base de datos
+npm run generate-codes # Generar códigos de invitación únicos
+```
 
-## Deploy on Vercel
+## 🗂️ Estructura del Proyecto
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+invitacion-ale-facu/
+├── src/
+│   ├── app/
+│   │   ├── api/guests/     # API endpoints
+│   │   ├── page.tsx        # Página principal
+│   │   └── layout.tsx
+│   ├── components/
+│   │   ├── steps/          # Pasos de la invitación
+│   │   └── ui/             # Componentes reutilizables
+│   └── lib/
+│       ├── db.ts           # Funciones de base de datos
+│       └── wedding-config.ts
+├── scripts/
+│   ├── init-db.js          # Script de inicialización
+│   └── generate-codes.js   # Generador de códigos
+└── public/                 # Assets estáticos
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎯 Flujo de Usuario
+
+1. Invitado recibe código de 6 letras por mensaje
+2. Ingresa el código en la página inicial
+3. Ve su invitación personalizada con su nombre
+4. Navega por los pasos (bienvenida, fecha, confirmación, regalos)
+5. Confirma asistencia indicando número de invitados
+6. Deja un mensaje opcional para los novios
+7. Confirmación guardada en base de datos
+
+## 🌐 Deploy
+
+### Vercel (Recomendado)
+
+1. Sube tu código a GitHub
+2. Importa el repositorio en [Vercel](https://vercel.com)
+3. Agrega la variable `DATABASE_URL` en Environment Variables
+4. Deploy automático
+
+📖 **Guía completa:** [VERCEL_DEPLOY.md](./VERCEL_DEPLOY.md)
+
+## 🔧 Configuración
+
+### Variables de Entorno
+
+```env
+DATABASE_URL="postgresql://..."  # Connection string de Neon
+```
+
+### Personalización
+
+Edita `src/lib/wedding-config.ts` para cambiar:
+- Fecha y hora de la boda
+- Ubicación del evento
+- Información de cuentas bancarias
+- Límites de confirmación
+
+## 📊 Monitoreo
+
+Ver confirmaciones en tiempo real usando el SQL Editor de Neon:
+
+```sql
+SELECT name, confirmed, message, confirmed_at 
+FROM invitations 
+WHERE confirmed > 0
+ORDER BY confirmed_at DESC;
+```
+
+## 👥 Autores
+
+Desarrollado con 💝 para la boda de Ale & Facu
+
+## 📄 Licencia
+
+Este proyecto es de uso privado para la celebración de la boda.

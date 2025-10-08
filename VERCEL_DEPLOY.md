@@ -61,13 +61,13 @@ Una vez creada la base de datos:
 2. Ve a la pestaña **"Settings"**
 3. En **"Project"**, conecta tu proyecto si no está conectado
 4. Vercel automáticamente agregará las variables de entorno necesarias:
-   - `POSTGRES_URL`
-   - `POSTGRES_PRISMA_URL`
-   - `POSTGRES_URL_NON_POOLING`
-   - `POSTGRES_USER`
-   - `POSTGRES_HOST`
-   - `POSTGRES_PASSWORD`
-   - `POSTGRES_DATABASE`
+   - `DATABASE_URL`
+   - `DATABASE_PRISMA_URL`
+   - `DATABASE_URL_NON_POOLING`
+   - `DATABASE_USER`
+   - `DATABASE_HOST`
+   - `DATABASE_PASSWORD`
+   - `DATABASE_DATABASE`
 
 ## 📤 Paso 5: Deploy Inicial
 
@@ -120,8 +120,8 @@ npm install
 3. Crea un archivo `.env.local` en la raíz del proyecto:
 ```bash
 # .env.local
-POSTGRES_URL="postgresql://..."
-POSTGRES_PRISMA_URL="postgresql://..."
+DATABASE_URL="postgresql://..."
+DATABASE_PRISMA_URL="postgresql://..."
 # ... resto de variables
 ```
 
