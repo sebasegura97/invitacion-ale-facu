@@ -8,15 +8,14 @@ import AnimatedIcon from "@/components/AnimatedIcon";
 import ConfirmationForm from "@/components/ConfirmationForm";
 
 interface ConfirmationStepProps {
-  onConfirm: (data: {
-    name: string;
-    guestCount: number;
-    message?: string;
-    giftMessage?: string;
-  }) => Promise<void>;
+  onConfirm: (data: { confirmed: number; message?: string }) => Promise<void>;
+  maxGuests: number;
 }
 
-export default function ConfirmationStep({ onConfirm }: ConfirmationStepProps) {
+export default function ConfirmationStep({
+  onConfirm,
+  maxGuests,
+}: ConfirmationStepProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -39,7 +38,7 @@ export default function ConfirmationStep({ onConfirm }: ConfirmationStepProps) {
         Confirma tu Asistencia
       </TextDraw>
 
-      <ConfirmationForm onConfirm={onConfirm} />
+      <ConfirmationForm onConfirm={onConfirm} maxGuests={maxGuests} />
     </motion.div>
   );
 }

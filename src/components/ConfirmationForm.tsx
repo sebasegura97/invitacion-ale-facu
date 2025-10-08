@@ -6,15 +6,14 @@ import TextDraw from "@/components/TextDraw";
 import Button from "@/components/ui/Button";
 
 interface ConfirmationFormProps {
-  onConfirm: (data: {
-    name: string;
-    guestCount: number;
-    message?: string;
-    giftMessage?: string;
-  }) => Promise<void>;
+  onConfirm: (data: { confirmed: number; message?: string }) => Promise<void>;
+  maxGuests: number;
 }
 
-export default function ConfirmationForm({ onConfirm }: ConfirmationFormProps) {
+export default function ConfirmationForm({
+  onConfirm,
+  maxGuests,
+}: ConfirmationFormProps) {
   const [formData, setFormData] = useState({
     guestCount: 1,
     message: "",
@@ -35,8 +34,7 @@ export default function ConfirmationForm({ onConfirm }: ConfirmationFormProps) {
 
     try {
       await onConfirm({
-        name: "Invitado",
-        guestCount: 0,
+        confirmed: 0,
         message: formData.message,
       });
       setIsConfirmed(true);
@@ -53,8 +51,7 @@ export default function ConfirmationForm({ onConfirm }: ConfirmationFormProps) {
 
     try {
       await onConfirm({
-        name: "Invitado",
-        guestCount: formData.guestCount,
+        confirmed: formData.guestCount,
         message: formData.message,
       });
       setIsConfirmed(true);
@@ -125,7 +122,7 @@ export default function ConfirmationForm({ onConfirm }: ConfirmationFormProps) {
             id="guestCount"
             name="guestCount"
             min="1"
-            max="10"
+            max={maxGuests}
             value={formData.guestCount}
             onChange={handleChange}
             className="w-12 px-2 py-2 border-b-2 border-wedding-text/30 bg-transparent text-wedding-text text-center font-cursive transition-all outline-none hover:border-wedding-text/50 focus:border-wedding-text active:border-wedding-text"
@@ -136,6 +133,18 @@ export default function ConfirmationForm({ onConfirm }: ConfirmationFormProps) {
             }}
           />
         </motion.div>
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 3.5 }}
+          className="text-wedding-text/50 font-cursive text-lg"
+          style={{
+            fontFamily:
+              "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
+          }}
+        >
+          de {maxGuests}
+        </motion.span>
       </div>
 
       {/* Botones */}

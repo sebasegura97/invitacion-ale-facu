@@ -10,34 +10,57 @@ import ConfirmationStep from "@/components/steps/ConfirmationStep";
 import BackgroundMusic, {
   BackgroundMusicRef,
 } from "@/components/BackgroundMusic";
+import { Invitation } from "@/lib/db";
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [invitation, setInvitation] = useState<Invitation | null>(null);
   const musicRef = useRef<BackgroundMusicRef>(null);
 
+  const handleCodeSubmit = async (code: string) => {
+    try {
+      const response = await fetch(`/api/guests?code=${code}`);
+
+      if (!response.ok) {
+        throw new Error("Código de invitación inválido");
+      }
+
+      const data = await response.json();
+      setInvitation(data);
+      handleNext();
+    } catch (error) {
+      console.error("Error fetching invitation:", error);
+      throw error;
+    }
+  };
+
   const handleConfirm = async (data: {
-    name: string;
-    guestCount: number;
+    confirmed: number;
     message?: string;
-    giftMessage?: string;
   }) => {
+    if (!invitation) return;
+
     try {
       const response = await fetch("/api/guests", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          code: invitation.code,
+          confirmed: data.confirmed,
+          message: data.message,
+        }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to confirm guest");
+        throw new Error("Failed to confirm invitation");
       }
 
       const result = await response.json();
-      console.log("Guest confirmed:", result);
+      console.log("Invitation confirmed:", result);
     } catch (error) {
-      console.error("Error confirming guest:", error);
+      console.error("Error confirming invitation:", error);
       throw error;
     }
   };
@@ -63,24 +86,27 @@ export default function Home() {
       case 0:
         return (
           <InitialStep
-            userName="Sebastián Segura"
-            onNext={handleNext}
+            onCodeSubmit={handleCodeSubmit}
             onStartMusic={handleStartMusic}
           />
         );
       case 1:
-        return <WelcomeStep onNext={handleNext} />;
+        return <WelcomeStep onNext={handleNext} userName={invitation?.name} />;
       case 2:
         return <DateTimeStep onNext={handleNext} onPrevious={handlePrevious} />;
       case 3:
-        return <ConfirmationStep onConfirm={handleConfirm} />;
+        return (
+          <ConfirmationStep
+            onConfirm={handleConfirm}
+            maxGuests={invitation?.guests || 1}
+          />
+        );
       case 4:
         return <GiftsStep />;
       default:
         return (
           <InitialStep
-            userName="Sebastián Segura"
-            onNext={handleNext}
+            onCodeSubmit={handleCodeSubmit}
             onStartMusic={handleStartMusic}
           />
         );
