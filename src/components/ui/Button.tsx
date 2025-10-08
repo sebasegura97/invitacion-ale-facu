@@ -84,7 +84,7 @@ function SimpleButton({
       {/* Animación de fondo para variant secondary */}
       {variant === "secondary" && (
         <motion.div
-          className="absolute inset-0 bg-gray-600 z-0"
+          className="absolute inset-0 bg-black opacity-10 z-0"
           initial={{ clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" }}
           animate={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
           transition={{

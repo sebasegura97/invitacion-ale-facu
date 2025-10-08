@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import TextDraw from "@/components/TextDraw";
 import HeartDraw from "@/components/HeartDraw";
 import Button from "@/components/ui/Button";
+import SpriteReveal from "../SpriteReveal";
 
 interface InitialStepProps {
   userName: string;
@@ -38,6 +39,8 @@ export default function InitialStep({
           {userName}
         </TextDraw>
       </div>
+
+      <SpriteReveal />
 
       {/* Botón de navegación con efecto de dibujo */}
       <div className="mt-8 flex justify-center">
