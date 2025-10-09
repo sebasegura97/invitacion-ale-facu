@@ -18,13 +18,6 @@ export default function WelcomeStep({ onNext, userName }: WelcomeStepProps) {
       className="p-8 rounded-lg text-center"
     >
       <div className="mb-8">
-        {/* Nombre del invitado si existe */}
-        {userName && (
-          <TextDraw delay={0.5} duration={1.5} size="3xl" className="mb-4">
-            {userName}
-          </TextDraw>
-        )}
-
         {/* Subtítulo con efecto de dibujo */}
         <TextDraw
           delay={userName ? 2 : 0.5}

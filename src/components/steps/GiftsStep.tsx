@@ -43,7 +43,7 @@ export default function GiftsStep() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="p-8 rounded-lg shadow-lg flex flex-col gap-4"
+            className="p-8 rounded-lg  flex flex-col gap-4"
           >
             <AnimatedIcon
               Icon={Gift}

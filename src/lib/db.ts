@@ -8,6 +8,7 @@ export interface Invitation {
   guests: number;
   code: string;
   confirmed: number;
+  declined: boolean;
   message: string | null;
   created_at: Date;
   confirmed_at: Date | null;
@@ -32,14 +33,16 @@ export async function getInvitationByCode(
 export async function confirmInvitation(
   code: string,
   confirmedCount: number,
-  message?: string
+  message?: string,
+  declined?: boolean
 ): Promise<Invitation | null> {
   try {
     const rows = await sql`
       UPDATE invitations 
       SET confirmed = ${confirmedCount},
           message = ${message || null},
-          confirmed_at = NOW()
+          confirmed_at = NOW(),
+          declined = ${declined || false}
       WHERE code = ${code.toUpperCase()}
       RETURNING *
     `;

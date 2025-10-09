@@ -51,12 +51,10 @@ const BackgroundMusic = forwardRef<BackgroundMusicRef>((props, ref) => {
     play: async () => {
       if (audioRef.current) {
         try {
-          // Establecer volumen inicial al 30%
-          audioRef.current.volume = 0.3;
+          audioRef.current.volume = 0;
 
           await audioRef.current.play();
 
-          // Animar el volumen de 30% a 60% durante 15 segundos
           animateVolume(0, 0.5, 30000);
         } catch (error) {
           console.error("Error al reproducir:", error);

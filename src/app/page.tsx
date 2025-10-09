@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import StepContainer from "@/components/StepContainer";
 import InitialStep from "@/components/steps/InitialStep";
 import WelcomeStep from "@/components/steps/WelcomeStep";
@@ -11,32 +11,49 @@ import BackgroundMusic, {
   BackgroundMusicRef,
 } from "@/components/BackgroundMusic";
 import { Invitation } from "@/lib/db";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
+  const code = useSearchParams().get("code");
+  const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [invitation, setInvitation] = useState<Invitation | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const musicRef = useRef<BackgroundMusicRef>(null);
+
+  useEffect(() => {
+    if (code) {
+      handleCodeSubmit(code);
+    }
+  }, [code]);
 
   const handleCodeSubmit = async (code: string) => {
     try {
+      setIsLoading(true);
       const response = await fetch(`/api/guests?code=${code}`);
 
       if (!response.ok) {
+        setError("Código de invitación inválido");
         throw new Error("Código de invitación inválido");
       }
 
       const data = await response.json();
       setInvitation(data);
-      handleNext();
+      if (data.confirmed_at !== null) {
+        setCurrentStep(4);
+      }
     } catch (error) {
       console.error("Error fetching invitation:", error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleConfirm = async (data: {
     confirmed: number;
     message?: string;
+    declined?: boolean;
   }) => {
     if (!invitation) return;
 
@@ -50,6 +67,7 @@ export default function Home() {
           code: invitation.code,
           confirmed: data.confirmed,
           message: data.message,
+          declined: data.declined,
         }),
       });
 
@@ -59,6 +77,8 @@ export default function Home() {
 
       const result = await response.json();
       console.log("Invitation confirmed:", result);
+
+      setCurrentStep(4);
     } catch (error) {
       console.error("Error confirming invitation:", error);
       throw error;
@@ -86,7 +106,8 @@ export default function Home() {
       case 0:
         return (
           <InitialStep
-            onCodeSubmit={handleCodeSubmit}
+            onNext={handleNext}
+            name={invitation?.name || ""}
             onStartMusic={handleStartMusic}
           />
         );
@@ -99,6 +120,7 @@ export default function Home() {
           <ConfirmationStep
             onConfirm={handleConfirm}
             maxGuests={invitation?.guests || 1}
+            guestName={invitation?.name || ""}
           />
         );
       case 4:
@@ -106,12 +128,25 @@ export default function Home() {
       default:
         return (
           <InitialStep
-            onCodeSubmit={handleCodeSubmit}
+            onNext={handleNext}
+            name={invitation?.name || ""}
             onStartMusic={handleStartMusic}
           />
         );
     }
   };
+
+  if (isLoading) {
+    return <div className="fixed inset-0 bg-black/50 z-50" />;
+  }
+
+  if (error) {
+    return (
+      <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <p className="text-white text-center">Código de invitación inválido</p>
+      </div>
+    );
+  }
 
   return (
     <>

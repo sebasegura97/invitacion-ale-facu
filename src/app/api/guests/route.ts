@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { code, confirmed, message } = body;
+    const { code, confirmed, message, declined } = body;
 
     if (!code) {
       return NextResponse.json({ error: "Code is required" }, { status: 400 });
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await confirmInvitation(code, confirmed, message);
+    const result = await confirmInvitation(code, confirmed, message, declined);
 
     if (!result) {
       return NextResponse.json(

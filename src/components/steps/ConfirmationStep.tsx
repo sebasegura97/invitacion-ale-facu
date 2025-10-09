@@ -1,21 +1,39 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
 import { WEDDING_CONFIG } from "@/lib/wedding-config";
 import TextDraw from "@/components/TextDraw";
 import AnimatedIcon from "@/components/AnimatedIcon";
 import ConfirmationForm from "@/components/ConfirmationForm";
+import InvitationView from "@/components/InvitationView";
 
 interface ConfirmationStepProps {
   onConfirm: (data: { confirmed: number; message?: string }) => Promise<void>;
   maxGuests: number;
+  guestName: string;
 }
 
 export default function ConfirmationStep({
   onConfirm,
   maxGuests,
+  guestName,
 }: ConfirmationStepProps) {
+  const [showInvitationView, setShowInvitationView] = useState(false);
+
+  if (showInvitationView) {
+    return (
+      <InvitationView
+        invitation={{
+          name: guestName,
+          quantity: maxGuests - 1,
+        }}
+        onBack={() => setShowInvitationView(false)}
+      />
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -38,7 +56,11 @@ export default function ConfirmationStep({
         Confirma tu Asistencia
       </TextDraw>
 
-      <ConfirmationForm onConfirm={onConfirm} maxGuests={maxGuests} />
+      <ConfirmationForm
+        onConfirm={onConfirm}
+        maxGuests={maxGuests}
+        onShowInvitation={() => setShowInvitationView(true)}
+      />
     </motion.div>
   );
 }

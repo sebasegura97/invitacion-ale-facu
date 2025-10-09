@@ -6,62 +6,67 @@ import TextDraw from "@/components/TextDraw";
 import Button from "@/components/ui/Button";
 
 interface ConfirmationFormProps {
-  onConfirm: (data: { confirmed: number; message?: string }) => Promise<void>;
+  onConfirm: (data: {
+    confirmed: number;
+    message?: string;
+    declined?: boolean;
+  }) => Promise<void>;
   maxGuests: number;
+  onShowInvitation: () => void;
 }
 
 export default function ConfirmationForm({
   onConfirm,
   maxGuests,
+  onShowInvitation,
 }: ConfirmationFormProps) {
   const [formData, setFormData] = useState({
     guestCount: 1,
     message: "",
+    declined: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isConfirmed, setIsConfirmed] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
-
-  const handleSubmit = async (willAttend: boolean) => {
-    if (willAttend) {
-      // Si confirma asistencia, mostrar modal para mensaje
-      setShowMessageModal(true);
-      return;
-    }
-
-    // Si no asiste, confirmar directamente
+  // Función genérica para enviar confirmación
+  const submitForm = async (data: {
+    confirmed: number;
+    message?: string;
+    declined?: boolean;
+  }) => {
     setIsSubmitting(true);
-
     try {
-      await onConfirm({
-        confirmed: 0,
-        message: formData.message,
-      });
-      setIsConfirmed(true);
+      await onConfirm(data);
+      setShowMessageModal(false);
     } catch (error) {
       console.error("Error confirming:", error);
       alert("Hubo un error al confirmar. Por favor intenta de nuevo.");
+      throw error; // Re-throw para que el caller pueda manejar si es necesario
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleConfirmWithMessage = async () => {
-    setIsSubmitting(true);
+  // Handler para cuando el usuario confirma asistencia
+  const handleConfirmAttendance = () => {
+    setShowMessageModal(true);
+  };
 
-    try {
-      await onConfirm({
-        confirmed: formData.guestCount,
-        message: formData.message,
-      });
-      setIsConfirmed(true);
-      setShowMessageModal(false);
-    } catch (error) {
-      console.error("Error confirming:", error);
-      alert("Hubo un error al confirmar. Por favor intenta de nuevo.");
-    } finally {
-      setIsSubmitting(false);
-    }
+  // Handler para cuando el usuario declina
+  const handleDeclineAttendance = async () => {
+    await submitForm({
+      confirmed: 0,
+      declined: true,
+      message: formData.message,
+    });
+  };
+
+  // Handler para confirmar desde el modal (con mensaje opcional)
+  const handleConfirm = async () => {
+    await submitForm({
+      confirmed: formData.guestCount,
+      message: formData.message,
+      declined: false,
+    });
   };
 
   const handleChange = (
@@ -74,103 +79,106 @@ export default function ConfirmationForm({
     }));
   };
 
-  if (isConfirmed) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="p-2 text-center"
-      >
-        <TextDraw
-          delay={0.5}
-          duration={2}
-          size="4xl"
-          className="mb-8 text-green-600"
-        >
-          ¡Confirmación exitosa!
-        </TextDraw>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 2.5 }}
-          className="text-center"
-        >
-          <div className="text-4xl mb-4">✓</div>
-          <TextDraw delay={3} duration={1.5} size="lg">
-            Gracias por confirmar. ¡Esperamos verte en nuestra boda!
-          </TextDraw>
-        </motion.div>
-      </motion.div>
-    );
-  }
+  const animationDelays = {
+    confirmedGuests: 3,
+    primaryButton: maxGuests > 1 ? 4.5 : 3.5,
+    secondaryButton: maxGuests > 1 ? 5 : 4,
+  };
 
   return (
     <>
       {/* Campo de invitados confirmados */}
-      <div className="flex items-center justify-center gap-4">
-        <TextDraw delay={3} duration={1} size="xl">
-          Invitados confirmados
-        </TextDraw>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 3.5 }}
-        >
-          <input
-            type="number"
-            id="guestCount"
-            name="guestCount"
-            min="1"
-            max={maxGuests}
-            value={formData.guestCount}
-            onChange={handleChange}
-            className="w-12 px-2 py-2 border-b-2 border-wedding-text/30 bg-transparent text-wedding-text text-center font-cursive transition-all outline-none hover:border-wedding-text/50 focus:border-wedding-text active:border-wedding-text"
+      {maxGuests > 1 && (
+        <div className="flex items-center justify-center gap-4">
+          <TextDraw
+            delay={animationDelays.confirmedGuests}
+            duration={1}
+            size="xl"
+          >
+            Invitados confirmados
+          </TextDraw>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: animationDelays.confirmedGuests + 1 }}
+          >
+            <input
+              type="number"
+              id="guestCount"
+              name="guestCount"
+              min="1"
+              max={maxGuests}
+              defaultValue={maxGuests}
+              onChange={handleChange}
+              className="w-12 px-2 py-2 border-b-2 border-wedding-text/30 bg-transparent text-wedding-text text-center font-cursive transition-all outline-none hover:border-wedding-text/50 focus:border-wedding-text active:border-wedding-text"
+              style={{
+                fontFamily:
+                  "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
+                fontSize: "1.25rem",
+              }}
+            />
+          </motion.div>
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: animationDelays.confirmedGuests + 1.5 }}
+            className="text-wedding-text/50 font-cursive text-lg"
             style={{
               fontFamily:
                 "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
-              fontSize: "1.25rem",
             }}
-          />
-        </motion.div>
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 3.5 }}
-          className="text-wedding-text/50 font-cursive text-lg"
-          style={{
-            fontFamily:
-              "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
-          }}
-        >
-          de {maxGuests}
-        </motion.span>
-      </div>
+          >
+            de {maxGuests}
+          </motion.span>
+        </div>
+      )}
 
       {/* Botones */}
       <div className="flex gap-4 justify-center flex-col sm:flex-row mt-12">
         <Button
-          onClick={() => handleSubmit(true)}
+          onClick={handleConfirmAttendance}
           disabled={isSubmitting}
           variant="secondary"
           size="md"
           className="flex-1"
-          backgroundAnimationDelay={5.5}
+          backgroundAnimationDelay={animationDelays.primaryButton + 0.5}
         >
-          <TextDraw delay={5} duration={1} size="lg">
+          <TextDraw
+            delay={animationDelays.primaryButton}
+            duration={1}
+            size="lg"
+          >
             Confirmar asistencia
           </TextDraw>
         </Button>
 
         <Button
-          onClick={() => handleSubmit(false)}
+          onClick={handleDeclineAttendance}
           disabled={isSubmitting}
           variant="primary"
           size="md"
           className="flex-1"
         >
-          <TextDraw delay={6} duration={0.5} size="lg">
+          <TextDraw
+            delay={animationDelays.secondaryButton}
+            duration={0.5}
+            size="lg"
+          >
             No podré asistir
+          </TextDraw>
+        </Button>
+        <Button
+          onClick={onShowInvitation}
+          variant="primary"
+          size="md"
+          className="flex-1"
+        >
+          <TextDraw
+            delay={animationDelays.secondaryButton}
+            duration={0.5}
+            size="lg"
+          >
+            Ver invitación
           </TextDraw>
         </Button>
       </div>
@@ -185,7 +193,7 @@ export default function ConfirmationForm({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowMessageModal(false)}
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50"
+              className="fixed inset-0 bg-black/70 z-50"
             />
 
             {/* Modal */}
@@ -195,7 +203,7 @@ export default function ConfirmationForm({
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4"
             >
-              <div className="bg-wedding-background/95 backdrop-blur-md rounded-lg max-w-md w-full p-8 space-y-6">
+              <div className="bg-wedding-bg rounded-lg max-w-md w-full p-8 space-y-6 shadow-2xl">
                 <div className="text-center">
                   <TextDraw
                     delay={0.5}
@@ -227,10 +235,10 @@ export default function ConfirmationForm({
                 />
 
                 <Button
-                  onClick={handleConfirmWithMessage}
+                  onClick={handleConfirm}
                   disabled={isSubmitting}
                   size="md"
-                  className="flex-1 m-auto      "
+                  className="flex-1 m-auto"
                 >
                   <TextDraw delay={2.5} duration={1} size="lg">
                     {isSubmitting ? "Confirmando..." : "Continuar"}
