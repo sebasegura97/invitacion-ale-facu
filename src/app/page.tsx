@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import StepContainer from "@/components/StepContainer";
 import InitialStep from "@/components/steps/InitialStep";
 import WelcomeStep from "@/components/steps/WelcomeStep";
@@ -13,7 +13,7 @@ import BackgroundMusic, {
 import { Invitation } from "@/lib/db";
 import { useSearchParams } from "next/navigation";
 
-export default function Home() {
+function InvitationContent() {
   const code = useSearchParams().get("code");
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -76,7 +76,7 @@ export default function Home() {
       }
 
       const result = await response.json();
-      console.log("Invitation confirmed:", result);
+      setInvitation(result);
 
       setCurrentStep(4);
     } catch (error) {
@@ -124,7 +124,12 @@ export default function Home() {
           />
         );
       case 4:
-        return <GiftsStep />;
+        return (
+          <GiftsStep
+            confirmed={invitation?.confirmed_at !== null}
+            declined={invitation?.declined || false}
+          />
+        );
       default:
         return (
           <InitialStep
@@ -140,7 +145,7 @@ export default function Home() {
     return <div className="fixed inset-0 bg-black/50 z-50" />;
   }
 
-  if (error) {
+  if (!code || error) {
     return (
       <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
         <p className="text-white text-center">Código de invitación inválido</p>
@@ -155,5 +160,13 @@ export default function Home() {
       </StepContainer>
       <BackgroundMusic ref={musicRef} />
     </>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="fixed inset-0 bg-black/50 z-50" />}>
+      <InvitationContent />
+    </Suspense>
   );
 }

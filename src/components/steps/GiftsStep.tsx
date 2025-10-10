@@ -11,7 +11,12 @@ import InvitationView from "../InvitationView";
 
 type View = "main" | "accounts" | "invitation";
 
-export default function GiftsStep() {
+interface GiftStepProps {
+  confirmed: boolean;
+  declined: boolean;
+}
+
+export default function GiftsStep({ confirmed, declined }: GiftStepProps) {
   const [currentView, setCurrentView] = useState<View>("main");
 
   const invitationData = {
@@ -45,30 +50,56 @@ export default function GiftsStep() {
             exit={{ opacity: 0, y: -20 }}
             className="p-8 rounded-lg  flex flex-col gap-4"
           >
+            {confirmed && (
+              <TextDraw
+                delay={0.5}
+                duration={2}
+                size="md"
+                className="text-center gray-300"
+              >
+                Gracias por confirmar
+              </TextDraw>
+            )}
+
+            {declined && (
+              <TextDraw
+                delay={0.5}
+                duration={2}
+                size="md"
+                className="text-center gray-300"
+              >
+                Lamentamos que no puedas venir
+              </TextDraw>
+            )}
+
             <AnimatedIcon
               Icon={Gift}
-              delay={0.5}
+              delay={1.5}
               className="w-8 h-8 mx-auto "
             />
-            <TextDraw
-              delay={1.5}
-              duration={2}
-              size="3xl"
-              className="text-center"
-            >
-              Tu presencia es nuestro mejor regalo
-            </TextDraw>
+
+            {confirmed && (
+              <TextDraw
+                delay={2.5}
+                duration={2}
+                size="3xl"
+                className="text-center"
+              >
+                Tu presencia es nuestro mejor regalo
+              </TextDraw>
+            )}
 
             <TextDraw
-              delay={3.5}
+              delay={5.5}
               duration={1}
               size="md"
               className=" text-center"
             >
               Sientete libre de aportar lo que quieras a nuestra boda.
             </TextDraw>
+
             <TextDraw
-              delay={5}
+              delay={6}
               duration={1.5}
               size="md"
               className="text-center mb-6"
@@ -81,9 +112,9 @@ export default function GiftsStep() {
               size="md"
               className="flex justify-center items-center mx-auto h-12 "
               icon={Mail}
-              delayIconAnimation={6}
+              delayIconAnimation={6.5}
               variant="secondary"
-              backgroundAnimationDelay={6}
+              backgroundAnimationDelay={7}
             >
               <TextDraw delay={6.5} duration={1} size="lg">
                 Ver invitación

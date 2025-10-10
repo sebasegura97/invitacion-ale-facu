@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import TextDraw from "@/components/TextDraw";
 import Button from "@/components/ui/Button";
 
@@ -26,7 +26,17 @@ export default function ConfirmationForm({
     declined: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showMessageModal, setShowMessageModal] = useState(false);
+
+  // Función para descargar la invitación
+  const downloadInvitation = () => {
+    const link = document.createElement("a");
+    link.href = "/invitacion.jpg";
+    link.download = "invitacion.jpg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // Función genérica para enviar confirmación
   const submitForm = async (data: {
     confirmed: number;
@@ -36,7 +46,6 @@ export default function ConfirmationForm({
     setIsSubmitting(true);
     try {
       await onConfirm(data);
-      setShowMessageModal(false);
     } catch (error) {
       console.error("Error confirming:", error);
       alert("Hubo un error al confirmar. Por favor intenta de nuevo.");
@@ -47,8 +56,14 @@ export default function ConfirmationForm({
   };
 
   // Handler para cuando el usuario confirma asistencia
-  const handleConfirmAttendance = () => {
-    setShowMessageModal(true);
+  const handleConfirmAttendance = async () => {
+    await submitForm({
+      confirmed: formData.guestCount,
+      message: formData.message,
+      declined: false,
+    });
+    // Descargar la invitación automáticamente después de confirmar
+    downloadInvitation();
   };
 
   // Handler para cuando el usuario declina
@@ -57,15 +72,6 @@ export default function ConfirmationForm({
       confirmed: 0,
       declined: true,
       message: formData.message,
-    });
-  };
-
-  // Handler para confirmar desde el modal (con mensaje opcional)
-  const handleConfirm = async () => {
-    await submitForm({
-      confirmed: formData.guestCount,
-      message: formData.message,
-      declined: false,
     });
   };
 
@@ -81,8 +87,9 @@ export default function ConfirmationForm({
 
   const animationDelays = {
     confirmedGuests: 3,
-    primaryButton: maxGuests > 1 ? 4.5 : 3.5,
-    secondaryButton: maxGuests > 1 ? 5 : 4,
+    message: maxGuests > 1 ? 4.5 : 3.5,
+    primaryButton: maxGuests > 1 ? 6 : 5,
+    secondaryButton: maxGuests > 1 ? 6.5 : 5.5,
   };
 
   return (
@@ -133,8 +140,32 @@ export default function ConfirmationForm({
         </div>
       )}
 
+      {/* Campo de mensaje para los novios */}
+      <div className="flex flex-col items-center justify-center gap-4 mt-8">
+        <TextDraw delay={animationDelays.message} duration={1} size="lg">
+          Mensaje para los novios
+        </TextDraw>
+        <motion.textarea
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: animationDelays.message + 1 }}
+          id="message"
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
+          rows={2}
+          className="w-full max-w-md px-4 py-3 border-b-2 border-wedding-text/30 bg-transparent text-wedding-text font-cursive resize-none transition-all outline-none hover:border-wedding-text/50 focus:border-wedding-text active:border-wedding-text placeholder:text-wedding-text/30 text-center"
+          style={{
+            fontFamily:
+              "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
+            fontSize: "1.125rem",
+          }}
+          placeholder="Escribe un mensaje para los novios..."
+        />
+      </div>
+
       {/* Botones */}
-      <div className="flex gap-4 justify-center flex-col sm:flex-row mt-12">
+      <div className="flex gap-4 justify-center flex-col mt-12">
         <Button
           onClick={handleConfirmAttendance}
           disabled={isSubmitting}
@@ -182,73 +213,6 @@ export default function ConfirmationForm({
           </TextDraw>
         </Button>
       </div>
-
-      {/* Modal para mensaje */}
-      <AnimatePresence>
-        {showMessageModal && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowMessageModal(false)}
-              className="fixed inset-0 bg-black/70 z-50"
-            />
-
-            {/* Modal */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            >
-              <div className="bg-wedding-bg rounded-lg max-w-md w-full p-8 space-y-6 shadow-2xl">
-                <div className="text-center">
-                  <TextDraw
-                    delay={0.5}
-                    duration={1}
-                    size="3xl"
-                    className="mb-2"
-                  >
-                    Mensaje para los novios
-                  </TextDraw>
-                </div>
-
-                <motion.textarea
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2 }}
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full px-4 py-3 border-b-2 border-wedding-text/30 bg-transparent text-wedding-text font-cursive resize-none transition-all outline-none hover:border-wedding-text/50 focus:border-wedding-text active:border-wedding-text placeholder:text-wedding-text/30"
-                  style={{
-                    fontFamily:
-                      "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
-                    fontSize: "1.125rem",
-                  }}
-                  placeholder="Escribe un mensaje para los novios..."
-                  autoFocus
-                />
-
-                <Button
-                  onClick={handleConfirm}
-                  disabled={isSubmitting}
-                  size="md"
-                  className="flex-1 m-auto"
-                >
-                  <TextDraw delay={2.5} duration={1} size="lg">
-                    {isSubmitting ? "Confirmando..." : "Continuar"}
-                  </TextDraw>
-                </Button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </>
   );
 }

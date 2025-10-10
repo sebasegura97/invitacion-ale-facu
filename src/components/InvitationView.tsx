@@ -8,6 +8,7 @@ import {
   Map,
   CalendarPlus,
   ArrowLeft,
+  Download,
 } from "lucide-react";
 import { WEDDING_CONFIG } from "@/lib/wedding-config";
 import Button from "./ui/Button";
@@ -39,6 +40,15 @@ export default function InvitationView({
 
     const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}&location=${location}&details=${details}`;
     window.open(url, "_blank");
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/invitacion.jpg";
+    link.download = "invitacion.jpg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -174,6 +184,24 @@ export default function InvitationView({
               }}
             >
               Agregar a Google Calendar
+            </span>
+          </Button>
+
+          <Button
+            onClick={handleDownload}
+            size="md"
+            variant="primary"
+            className="flex justify-center items-center h-12"
+            icon={Download}
+          >
+            <span
+              className="text-lg font-cursive"
+              style={{
+                fontFamily:
+                  "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
+              }}
+            >
+              Descargar
             </span>
           </Button>
         </div>
