@@ -20,10 +20,7 @@ export interface WeddingConfig {
   time: string;
   location: string;
   address: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
+  plusCode: string; // Google Plus Code
   dressCode: string;
   giftInfo: {
     accounts: BankAccount[];
@@ -36,10 +33,7 @@ export const WEDDING_CONFIG: WeddingConfig = {
   time: "Desde las 17:30hs",
   location: "Hosteria la Caldera",
   address: "Santa Mónica s/n, La Caldera, Salta",
-  coordinates: {
-    lat: 19.0414,
-    lng: -98.2063,
-  },
+  plusCode: "CJ4F+69 La Caldera, Salta",
   dressCode: "Elegante Sport",
   giftInfo: {
     accounts: [

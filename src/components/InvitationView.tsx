@@ -26,7 +26,9 @@ export default function InvitationView({
   onBack,
 }: InvitationViewProps) {
   const handleGoogleMaps = () => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${WEDDING_CONFIG.coordinates.lat},${WEDDING_CONFIG.coordinates.lng}`;
+    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      WEDDING_CONFIG.plusCode
+    )}`;
     window.open(url, "_blank");
   };
 
