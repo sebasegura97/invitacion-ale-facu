@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import TextDraw from "@/components/TextDraw";
 import Button from "@/components/ui/Button";
+import { useTranslation } from "@/i18n/context";
 
 interface ConfirmationFormProps {
   onConfirm: (data: {
@@ -20,6 +21,7 @@ export default function ConfirmationForm({
   maxGuests,
   onShowInvitation,
 }: ConfirmationFormProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     guestCount: 1,
     message: "",
@@ -48,7 +50,7 @@ export default function ConfirmationForm({
       await onConfirm(data);
     } catch (error) {
       console.error("Error confirming:", error);
-      alert("Hubo un error al confirmar. Por favor intenta de nuevo.");
+      alert(t("errors.confirmationFailed"));
       throw error; // Re-throw para que el caller pueda manejar si es necesario
     } finally {
       setIsSubmitting(false);
@@ -102,7 +104,7 @@ export default function ConfirmationForm({
             duration={1}
             size="xl"
           >
-            Invitados confirmados
+            {t("confirmation.guestsConfirmed")}
           </TextDraw>
           <motion.div
             initial={{ opacity: 0 }}
@@ -135,7 +137,7 @@ export default function ConfirmationForm({
                 "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
             }}
           >
-            de {maxGuests}
+            {t("confirmation.of")} {maxGuests}
           </motion.span>
         </div>
       )}
@@ -143,7 +145,7 @@ export default function ConfirmationForm({
       {/* Campo de mensaje para los novios */}
       <div className="flex flex-col items-center justify-center gap-4 mt-8">
         <TextDraw delay={animationDelays.message} duration={1} size="lg">
-          Mensaje para los novios
+          {t("confirmation.messageLabel")}
         </TextDraw>
         <motion.textarea
           initial={{ opacity: 0, y: 10 }}
@@ -160,7 +162,7 @@ export default function ConfirmationForm({
               "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
             fontSize: "1.125rem",
           }}
-          placeholder="Escribe un mensaje para los novios..."
+          placeholder={t("confirmation.messagePlaceholder")}
         />
       </div>
 
@@ -179,7 +181,7 @@ export default function ConfirmationForm({
             duration={1}
             size="lg"
           >
-            Confirmar asistencia
+            {t("confirmation.confirmButton")}
           </TextDraw>
         </Button>
 
@@ -195,7 +197,7 @@ export default function ConfirmationForm({
             duration={0.5}
             size="lg"
           >
-            No podré asistir
+            {t("confirmation.declineButton")}
           </TextDraw>
         </Button>
         <Button
@@ -209,7 +211,7 @@ export default function ConfirmationForm({
             duration={0.5}
             size="lg"
           >
-            Ver invitación
+            {t("confirmation.viewInvitation")}
           </TextDraw>
         </Button>
       </div>

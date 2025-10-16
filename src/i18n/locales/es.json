@@ -1,0 +1,86 @@
+{
+  "common": {
+    "continue": "Continuar",
+    "back": "Volver",
+    "loading": "Cargando...",
+    "names": "Ale y Facu"
+  },
+  "errors": {
+    "invalidCode": "Código de invitación inválido",
+    "confirmationFailed": "Hubo un error al confirmar. Por favor intenta de nuevo."
+  },
+  "initial": {
+    "invitationFor": "Invitación para",
+    "greeting": "Hola",
+    "openInvitation": "Abrir invitación"
+  },
+  "welcome": {
+    "title": "¡Nos casamos!",
+    "message": "¡Y queremos que formes parte de este día tan especial!"
+  },
+  "dateTime": {
+    "title": "El día y el lugar",
+    "date": "20 de diciembre de 2025",
+    "time": "Desde las 17:30hs",
+    "location": "Hosteria la Caldera",
+    "address": "Santa Mónica s/n, La Caldera, Salta",
+    "dressCode": "Elegante Sport",
+    "sunglasses": "Traé tus mejores lentes de sol!"
+  },
+  "confirmation": {
+    "title": "Confirma tu Asistencia",
+    "expiresOn": "expira el",
+    "deadline": "7 de noviembre de 2025",
+    "guestsConfirmed": "Invitados confirmados",
+    "of": "de",
+    "messageLabel": "Mensaje para los novios",
+    "messagePlaceholder": "Escribe un mensaje para los novios...",
+    "confirmButton": "Confirmar asistencia",
+    "declineButton": "No podré asistir",
+    "viewInvitation": "Ver invitación"
+  },
+  "gifts": {
+    "thanksConfirmed": "Gracias por confirmar",
+    "sorryDeclined": "Lamentamos que no puedas venir",
+    "mainMessage": "Tu presencia es nuestro mejor regalo",
+    "giftMessage": "Sientete libre de aportar lo que quieras a nuestra boda.",
+    "cashPreference": "Si se preguntan, preferimos efectivo 🤭",
+    "viewInvitation": "Ver invitación",
+    "viewAccounts": "Cuentas bancarias"
+  },
+  "bankAccounts": {
+    "title": "Datos para transferencias",
+    "selectRegion": "¿Desde dónde nos enviarás el regalo?",
+    "availableAccounts": "Cuentas disponibles",
+    "changeRegion": "Cambiar región",
+    "regions": {
+      "argentina": "Argentina",
+      "switzerland": "Suiza",
+      "europe": "Europa"
+    },
+    "fields": {
+      "cbu": "CBU",
+      "alias": "Alias",
+      "accountNumber": "Nº de cuenta",
+      "cuit": "CUIT",
+      "iban": "IBAN",
+      "phone": "Teléfono"
+    },
+    "accountDescriptions": {
+      "swissAccount": "Cuenta en francos suizos",
+      "twintApp": "App de pagos móviles en Suiza",
+      "revolutEur": "Cuenta en euros para transferencias en el exterior"
+    }
+  },
+  "invitation": {
+    "inviteText": "te invitamos a nuestra boda",
+    "andYou": "a vos y",
+    "companion": "acompañante",
+    "companions": "acompañantes",
+    "viewOnGoogleMaps": "Ver en Google Maps",
+    "addToCalendar": "Agregar a Google Calendar",
+    "download": "Descargar",
+    "eventTitle": "Boda de Alejandra y Facundo",
+    "eventDescription": "Celebración de la boda en"
+  }
+}

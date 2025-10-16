@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import TextDraw from "@/components/TextDraw";
 import HeartDraw from "@/components/HeartDraw";
 import Button from "@/components/ui/Button";
+import { useTranslation } from "@/i18n/context";
 
 interface WelcomeStepProps {
   onNext: () => void;
@@ -11,6 +12,8 @@ interface WelcomeStepProps {
 }
 
 export default function WelcomeStep({ onNext, userName }: WelcomeStepProps) {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -25,7 +28,7 @@ export default function WelcomeStep({ onNext, userName }: WelcomeStepProps) {
           size="2xl"
           className="mb-2"
         >
-          ¡Nos casamos!
+          {t("welcome.title")}
         </TextDraw>
 
         {/* Título principal con efecto de dibujo */}
@@ -35,7 +38,7 @@ export default function WelcomeStep({ onNext, userName }: WelcomeStepProps) {
           size="6xl"
           className="mb-4"
         >
-          Ale y Facu
+          {t("common.names")}
         </TextDraw>
 
         <div className="flex justify-center">
@@ -44,7 +47,7 @@ export default function WelcomeStep({ onNext, userName }: WelcomeStepProps) {
       </div>
 
       <TextDraw delay={userName ? 6.5 : 5} duration={2} size="xl">
-        ¡Y queremos que formes parte de este día tan especial!
+        {t("welcome.message")}
       </TextDraw>
 
       {/* Botón de navegación con efecto de dibujo */}
@@ -64,7 +67,7 @@ export default function WelcomeStep({ onNext, userName }: WelcomeStepProps) {
             size="lg"
             className=""
           >
-            Continuar
+            {t("common.continue")}
           </TextDraw>
         </Button>
       </div>

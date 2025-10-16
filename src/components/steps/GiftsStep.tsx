@@ -8,21 +8,24 @@ import AnimatedIcon from "../AnimatedIcon";
 import Button from "../ui/Button";
 import BankAccountsView from "../BankAccountsView";
 import InvitationView from "../InvitationView";
+import { useTranslation } from "@/i18n/context";
+import { Invitation } from "@/lib/db";
 
 type View = "main" | "accounts" | "invitation";
 
 interface GiftStepProps {
   confirmed: boolean;
   declined: boolean;
+  invitationData?: Invitation | null;
 }
 
-export default function GiftsStep({ confirmed, declined }: GiftStepProps) {
+export default function GiftsStep({
+  confirmed,
+  declined,
+  invitationData,
+}: GiftStepProps) {
+  const { t } = useTranslation();
   const [currentView, setCurrentView] = useState<View>("main");
-
-  const invitationData = {
-    name: "Juan Pérez",
-    quantity: 2,
-  };
 
   const renderView = () => {
     switch (currentView) {
@@ -37,7 +40,10 @@ export default function GiftsStep({ confirmed, declined }: GiftStepProps) {
         return (
           <InvitationView
             key="invitation"
-            invitation={invitationData}
+            invitation={{
+              name: invitationData?.name || "",
+              quantity: invitationData?.confirmed || 0,
+            }}
             onBack={() => setCurrentView("main")}
           />
         );
@@ -57,7 +63,7 @@ export default function GiftsStep({ confirmed, declined }: GiftStepProps) {
                 size="md"
                 className="text-center gray-300"
               >
-                Gracias por confirmar
+                {t("gifts.thanksConfirmed")}
               </TextDraw>
             )}
 
@@ -68,7 +74,7 @@ export default function GiftsStep({ confirmed, declined }: GiftStepProps) {
                 size="md"
                 className="text-center gray-300"
               >
-                Lamentamos que no puedas venir
+                {t("gifts.sorryDeclined")}
               </TextDraw>
             )}
 
@@ -85,7 +91,7 @@ export default function GiftsStep({ confirmed, declined }: GiftStepProps) {
                 size="3xl"
                 className="text-center"
               >
-                Tu presencia es nuestro mejor regalo
+                {t("gifts.mainMessage")}
               </TextDraw>
             )}
 
@@ -95,7 +101,7 @@ export default function GiftsStep({ confirmed, declined }: GiftStepProps) {
               size="md"
               className=" text-center"
             >
-              Sientete libre de aportar lo que quieras a nuestra boda.
+              {t("gifts.giftMessage")}
             </TextDraw>
 
             <TextDraw
@@ -104,7 +110,7 @@ export default function GiftsStep({ confirmed, declined }: GiftStepProps) {
               size="md"
               className="text-center mb-6"
             >
-              Si se preguntan, preferimos efectivo 🤭
+              {t("gifts.cashPreference")}
             </TextDraw>
 
             <Button
@@ -117,7 +123,7 @@ export default function GiftsStep({ confirmed, declined }: GiftStepProps) {
               backgroundAnimationDelay={7}
             >
               <TextDraw delay={6.5} duration={1} size="lg">
-                Ver invitación
+                {t("gifts.viewInvitation")}
               </TextDraw>
             </Button>
             <Button
@@ -128,7 +134,7 @@ export default function GiftsStep({ confirmed, declined }: GiftStepProps) {
               delayIconAnimation={7.5}
             >
               <TextDraw delay={8} duration={1} size="lg">
-                Cuentas bancarias
+                {t("gifts.viewAccounts")}
               </TextDraw>
             </Button>
           </motion.div>

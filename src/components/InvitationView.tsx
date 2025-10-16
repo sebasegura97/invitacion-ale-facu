@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { WEDDING_CONFIG } from "@/lib/wedding-config";
 import Button from "./ui/Button";
+import { useTranslation } from "@/i18n/context";
 
 interface InvitationViewProps {
   invitation: {
@@ -25,6 +26,8 @@ export default function InvitationView({
   invitation,
   onBack,
 }: InvitationViewProps) {
+  const { t } = useTranslation();
+
   const handleGoogleMaps = () => {
     const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
       WEDDING_CONFIG.plusCode
@@ -34,10 +37,10 @@ export default function InvitationView({
 
   const handleGoogleCalendar = () => {
     const dateStr = "20251220T173000/20251221T030000";
-    const title = encodeURIComponent("Boda de Alejandra y Facundo");
+    const title = encodeURIComponent(t("invitation.eventTitle"));
     const location = encodeURIComponent(WEDDING_CONFIG.address);
     const details = encodeURIComponent(
-      `Celebración de la boda en ${WEDDING_CONFIG.location}`
+      `${t("invitation.eventDescription")} ${WEDDING_CONFIG.location}`
     );
 
     const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}&location=${location}&details=${details}`;
@@ -58,7 +61,7 @@ export default function InvitationView({
       <button
         onClick={onBack}
         className="p-2 hover:bg-wedding-text/10 rounded-full transition-colors"
-        aria-label="Volver"
+        aria-label={t("common.back")}
       >
         <ArrowLeft className="w-6 h-6 text-wedding-text" />
       </button>
@@ -80,7 +83,7 @@ export default function InvitationView({
                 "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
             }}
           >
-            te invitamos a nuestra boda
+            {t("invitation.inviteText")}
           </h1>
           {invitation.quantity > 0 && (
             <p
@@ -90,8 +93,10 @@ export default function InvitationView({
                   "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
               }}
             >
-              a vos y {invitation.quantity}{" "}
-              {invitation.quantity === 1 ? "acompañante" : "acompañantes"}
+              {t("invitation.andYou")} {invitation.quantity}{" "}
+              {invitation.quantity === 1
+                ? t("invitation.companion")
+                : t("invitation.companions")}
             </p>
           )}
         </div>
@@ -107,7 +112,7 @@ export default function InvitationView({
                     "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
                 }}
               >
-                {WEDDING_CONFIG.date}
+                {t("dateTime.date")}
               </span>
             </div>
 
@@ -120,7 +125,7 @@ export default function InvitationView({
                     "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
                 }}
               >
-                {WEDDING_CONFIG.time}
+                {t("dateTime.time")}
               </span>
             </div>
 
@@ -133,10 +138,20 @@ export default function InvitationView({
                     "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
                 }}
               >
-                {WEDDING_CONFIG.dressCode}
+                {t("dateTime.dressCode")}
               </span>
             </div>
-
+            <div className="flex items-center ml-4 ">
+              <span
+                className="text-md text-wedding-text font-cursive"
+                style={{
+                  fontFamily:
+                    "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
+                }}
+              >
+                {t("dateTime.sunglasses")} 😎
+              </span>
+            </div>
             <div className="flex items-center gap-3">
               <MapPin className="w-5 h-5 text-wedding-text" />
               <span
@@ -146,7 +161,7 @@ export default function InvitationView({
                     "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
                 }}
               >
-                {WEDDING_CONFIG.location}
+                {t("dateTime.location")}
               </span>
             </div>
           </div>
@@ -167,7 +182,7 @@ export default function InvitationView({
                   "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
               }}
             >
-              Ver en Google Maps
+              {t("invitation.viewOnGoogleMaps")}
             </span>
           </Button>
 
@@ -185,7 +200,7 @@ export default function InvitationView({
                   "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
               }}
             >
-              Agregar a Google Calendar
+              {t("invitation.addToCalendar")}
             </span>
           </Button>
 
@@ -203,7 +218,7 @@ export default function InvitationView({
                   "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
               }}
             >
-              Descargar
+              {t("invitation.download")}
             </span>
           </Button>
         </div>

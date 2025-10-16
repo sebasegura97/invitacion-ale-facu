@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import TextDraw from "@/components/TextDraw";
 import Button from "@/components/ui/Button";
+import { useTranslation } from "@/i18n/context";
 
 interface InitialStepProps {
   onNext: () => void;
@@ -15,6 +16,8 @@ export default function InitialStep({
   onStartMusic,
   name,
 }: InitialStepProps) {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,7 +27,7 @@ export default function InitialStep({
       <div className="mb-8">
         {/* Título principal con efecto de dibujo */}
         <TextDraw delay={0.5} duration={2} size="xl" className="mb-4">
-          Invitación para
+          {t("initial.invitationFor")}
         </TextDraw>
 
         <TextDraw delay={2} duration={1.5} size="4xl" className="mb-8">
@@ -42,7 +45,7 @@ export default function InitialStep({
           disabled={false}
         >
           <TextDraw delay={4} duration={1.5} size="lg">
-            Continuar
+            {t("common.continue")}
           </TextDraw>
         </Button>
       </div>

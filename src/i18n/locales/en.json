@@ -1,0 +1,86 @@
+{
+  "common": {
+    "continue": "Continue",
+    "back": "Back",
+    "loading": "Loading...",
+    "names": "Ale & Facu"
+  },
+  "errors": {
+    "invalidCode": "Invalid invitation code",
+    "confirmationFailed": "There was an error confirming. Please try again."
+  },
+  "initial": {
+    "invitationFor": "Invitation for",
+    "greeting": "Hello",
+    "openInvitation": "Open invitation"
+  },
+  "welcome": {
+    "title": "We're getting married!",
+    "message": "And we want you to be part of this special day!"
+  },
+  "dateTime": {
+    "title": "Date and Location",
+    "date": "December 20, 2025",
+    "time": "From 5:30 PM",
+    "location": "Hosteria la Caldera",
+    "address": "Santa Mónica s/n, La Caldera, Salta",
+    "dressCode": "Smart Casual",
+    "sunglasses": "Bring your best sunglasses!"
+  },
+  "confirmation": {
+    "title": "Confirm Your Attendance",
+    "expiresOn": "expires on",
+    "deadline": "November 7, 2025",
+    "guestsConfirmed": "Confirmed guests",
+    "of": "of",
+    "messageLabel": "Message for the couple",
+    "messagePlaceholder": "Write a message for the couple...",
+    "confirmButton": "Confirm attendance",
+    "declineButton": "Can't attend",
+    "viewInvitation": "View invitation"
+  },
+  "gifts": {
+    "thanksConfirmed": "Thanks for confirming",
+    "sorryDeclined": "We're sorry you can't make it",
+    "mainMessage": "Your presence is our greatest gift",
+    "giftMessage": "Feel free to contribute whatever you wish to our wedding.",
+    "cashPreference": "If you're wondering, we prefer cash 🤭",
+    "viewInvitation": "View invitation",
+    "viewAccounts": "Bank accounts"
+  },
+  "bankAccounts": {
+    "title": "Transfer information",
+    "selectRegion": "Where will you be sending the gift from?",
+    "availableAccounts": "Available accounts",
+    "changeRegion": "Change region",
+    "regions": {
+      "argentina": "Argentina",
+      "switzerland": "Switzerland",
+      "europe": "Europe"
+    },
+    "fields": {
+      "cbu": "CBU",
+      "alias": "Alias",
+      "accountNumber": "Account No.",
+      "cuit": "CUIT",
+      "iban": "IBAN",
+      "phone": "Phone"
+    },
+    "accountDescriptions": {
+      "swissAccount": "Swiss franc account",
+      "twintApp": "Mobile payment app in Switzerland",
+      "revolutEur": "Euro account for international transfers"
+    }
+  },
+  "invitation": {
+    "inviteText": "we invite you to our wedding",
+    "andYou": "you and",
+    "companion": "guest",
+    "companions": "guests",
+    "viewOnGoogleMaps": "View on Google Maps",
+    "addToCalendar": "Add to Google Calendar",
+    "download": "Download",
+    "eventTitle": "Alejandra & Facundo's Wedding",
+    "eventDescription": "Wedding celebration at"
+  }
+}

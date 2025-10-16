@@ -30,8 +30,6 @@ interface TextDrawProps {
   duration?: number;
   className?: string;
   size?: TextSize;
-  responsive?: boolean;
-  reverse?: boolean; // Nueva prop para animación reversa
 }
 
 export default function TextDraw({
@@ -40,8 +38,6 @@ export default function TextDraw({
   duration = 4,
   className = "",
   size = "4xl",
-  responsive = false,
-  reverse = false,
 }: TextDrawProps) {
   const sizeConfig: SizeConfig = {
     xs: {

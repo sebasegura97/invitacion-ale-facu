@@ -2,15 +2,17 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Wallet, ChevronDown, Check, Copy } from "lucide-react";
+import { Wallet, ChevronDown, Check, Copy } from "lucide-react";
 import TextDraw from "./TextDraw";
 import AnimatedIcon from "./AnimatedIcon";
 import Button from "./ui/Button";
 import { WEDDING_CONFIG, BankAccount } from "@/lib/wedding-config";
+import { useTranslation } from "@/i18n/context";
 
 type Region = "argentina" | "suiza" | "europa" | null;
 
 export default function BankAccountsView({ onBack }: { onBack: () => void }) {
+  const { t } = useTranslation();
   const [selectedRegion, setSelectedRegion] = useState<Region>(null);
   const [expandedAccount, setExpandedAccount] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -38,9 +40,21 @@ export default function BankAccountsView({ onBack }: { onBack: () => void }) {
   };
 
   const regions = [
-    { id: "argentina" as Region, name: "Argentina", flag: "🇦🇷" },
-    { id: "suiza" as Region, name: "Suiza", flag: "🇨🇭" },
-    { id: "europa" as Region, name: "Europa", flag: "🌍" },
+    {
+      id: "argentina" as Region,
+      name: t("bankAccounts.regions.argentina"),
+      flag: "🇦🇷",
+    },
+    {
+      id: "suiza" as Region,
+      name: t("bankAccounts.regions.switzerland"),
+      flag: "🇨🇭",
+    },
+    {
+      id: "europa" as Region,
+      name: t("bankAccounts.regions.europe"),
+      flag: "🌍",
+    },
   ];
 
   const renderAccountField = (
@@ -77,12 +91,12 @@ export default function BankAccountsView({ onBack }: { onBack: () => void }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="p-8 rounded-lg shadow-lg flex flex-col gap-6"
+      className="p-8 rounded-lg flex flex-col gap-6"
     >
       <AnimatedIcon Icon={Wallet} delay={0.5} className="w-8 h-8 mx-auto" />
 
       <TextDraw delay={1.5} duration={2} size="3xl" className="text-center">
-        Datos para transferencias
+        {t("bankAccounts.title")}
       </TextDraw>
 
       {!selectedRegion ? (
@@ -93,7 +107,7 @@ export default function BankAccountsView({ onBack }: { onBack: () => void }) {
             size="lg"
             className="text-center"
           >
-            ¿Desde dónde nos enviarás el regalo?
+            {t("bankAccounts.selectRegion")}
           </TextDraw>
 
           <motion.div
@@ -130,7 +144,7 @@ export default function BankAccountsView({ onBack }: { onBack: () => void }) {
           >
             <div className="flex items-center justify-between mb-6">
               <TextDraw delay={0.5} duration={1} size="xl">
-                Cuentas disponibles
+                {t("bankAccounts.availableAccounts")}
               </TextDraw>
               <button
                 onClick={() => {
@@ -139,7 +153,7 @@ export default function BankAccountsView({ onBack }: { onBack: () => void }) {
                 }}
                 className="text-sm text-wedding-text/60 hover:text-wedding-text underline"
               >
-                Cambiar región
+                {t("bankAccounts.changeRegion")}
               </button>
             </div>
 
@@ -188,37 +202,37 @@ export default function BankAccountsView({ onBack }: { onBack: () => void }) {
                     >
                       <div className="p-4 bg-wedding-text/5 space-y-2">
                         {renderAccountField(
-                          "CBU",
+                          t("bankAccounts.fields.cbu"),
                           account.cbu,
                           account.id,
                           "cbu"
                         )}
                         {renderAccountField(
-                          "Alias",
+                          t("bankAccounts.fields.alias"),
                           account.alias,
                           account.id,
                           "alias"
                         )}
                         {renderAccountField(
-                          "Nº de cuenta",
+                          t("bankAccounts.fields.accountNumber"),
                           account.accountNumber,
                           account.id,
                           "accountNumber"
                         )}
                         {renderAccountField(
-                          "CUIT",
+                          t("bankAccounts.fields.cuit"),
                           account.cuit,
                           account.id,
                           "cuit"
                         )}
                         {renderAccountField(
-                          "IBAN",
+                          t("bankAccounts.fields.iban"),
                           account.iban,
                           account.id,
                           "iban"
                         )}
                         {renderAccountField(
-                          "Teléfono",
+                          t("bankAccounts.fields.phone"),
                           account.phoneNumber,
                           account.id,
                           "phoneNumber"
@@ -240,7 +254,7 @@ export default function BankAccountsView({ onBack }: { onBack: () => void }) {
 
       <Button onClick={onBack} size="md" variant="outline" className="mt-4">
         <TextDraw delay={0} duration={0.5} size="md">
-          Volver
+          {t("common.back")}
         </TextDraw>
       </Button>
     </motion.div>

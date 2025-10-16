@@ -12,8 +12,10 @@ import BackgroundMusic, {
 } from "@/components/BackgroundMusic";
 import { Invitation } from "@/lib/db";
 import { useSearchParams } from "next/navigation";
+import { useTranslation } from "@/i18n/context";
 
 function InvitationContent() {
+  const { t } = useTranslation();
   const code = useSearchParams().get("code");
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -25,6 +27,7 @@ function InvitationContent() {
     if (code) {
       handleCodeSubmit(code);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
   const handleCodeSubmit = async (code: string) => {
@@ -33,8 +36,8 @@ function InvitationContent() {
       const response = await fetch(`/api/guests?code=${code}`);
 
       if (!response.ok) {
-        setError("Código de invitación inválido");
-        throw new Error("Código de invitación inválido");
+        setError(t("errors.invalidCode"));
+        throw new Error(t("errors.invalidCode"));
       }
 
       const data = await response.json();
@@ -126,6 +129,7 @@ function InvitationContent() {
       case 4:
         return (
           <GiftsStep
+            invitationData={invitation}
             confirmed={invitation?.confirmed_at !== null}
             declined={invitation?.declined || false}
           />
@@ -148,7 +152,7 @@ function InvitationContent() {
   if (!code || error) {
     return (
       <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-        <p className="text-white text-center">Código de invitación inválido</p>
+        <p className="text-white text-center">{t("errors.invalidCode")}</p>
       </div>
     );
   }

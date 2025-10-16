@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
-import { WEDDING_CONFIG } from "@/lib/wedding-config";
 import TextDraw from "@/components/TextDraw";
 import AnimatedIcon from "@/components/AnimatedIcon";
 import ConfirmationForm from "@/components/ConfirmationForm";
 import InvitationView from "@/components/InvitationView";
+import { useTranslation } from "@/i18n/context";
 
 interface ConfirmationStepProps {
   onConfirm: (data: { confirmed: number; message?: string }) => Promise<void>;
@@ -20,6 +20,7 @@ export default function ConfirmationStep({
   maxGuests,
   guestName,
 }: ConfirmationStepProps) {
+  const { t } = useTranslation();
   const [showInvitationView, setShowInvitationView] = useState(false);
 
   if (showInvitationView) {
@@ -48,12 +49,12 @@ export default function ConfirmationStep({
           size="md"
           className="text-gray-400"
         >
-          {`expira el  ${WEDDING_CONFIG.confirmationDateLimit}`}
+          {`${t("confirmation.expiresOn")} ${t("confirmation.deadline")}`}
         </TextDraw>
       </div>
 
       <TextDraw delay={2} duration={1.5} size="4xl" className="mb-8">
-        Confirma tu Asistencia
+        {t("confirmation.title")}
       </TextDraw>
 
       <ConfirmationForm

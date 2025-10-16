@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, Clock, MapPin, Shirt } from "lucide-react";
-import { WEDDING_CONFIG } from "@/lib/wedding-config";
+import { Calendar, Clock, MapPin, Shirt, Glasses } from "lucide-react";
 import TextDraw from "@/components/TextDraw";
 import Button from "@/components/ui/Button";
 import AnimatedIcon from "@/components/AnimatedIcon";
+import { useTranslation } from "@/i18n/context";
 
 interface DateTimeStepProps {
   onNext: () => void;
@@ -13,6 +13,8 @@ interface DateTimeStepProps {
 }
 
 export default function DateTimeStep({ onNext }: DateTimeStepProps) {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -20,7 +22,7 @@ export default function DateTimeStep({ onNext }: DateTimeStepProps) {
       className="p-2 text-center"
     >
       <TextDraw delay={0.5} duration={2} size="4xl" className="mb-8">
-        El día y el lugar
+        {t("dateTime.title")}
       </TextDraw>
 
       <div className="space-y-8 px-4 flex items-center  flex-col relative">
@@ -28,38 +30,45 @@ export default function DateTimeStep({ onNext }: DateTimeStepProps) {
           <div className="flex items-center ">
             <AnimatedIcon Icon={Calendar} delay={2.5} />
             <TextDraw delay={2.5} duration={1.5} size="xl">
-              {WEDDING_CONFIG.date}
+              {t("dateTime.date")}
             </TextDraw>
           </div>
 
           <div className="flex items-center ">
             <AnimatedIcon Icon={Clock} delay={4} />
             <TextDraw delay={4} duration={1.5} size="xl">
-              {WEDDING_CONFIG.time}
+              {t("dateTime.time")}
             </TextDraw>
           </div>
 
           <div className="flex items-center ">
             <AnimatedIcon Icon={Shirt} delay={5.5} />
             <TextDraw delay={5.5} duration={1.5} size="xl">
-              {WEDDING_CONFIG.dressCode}
+              {t("dateTime.dressCode")}
+            </TextDraw>
+          </div>
+
+          <div className="flex items-center ml-4 ">
+            <AnimatedIcon Icon={Glasses} delay={7} />
+            <TextDraw delay={7} duration={1.5} size="xl">
+              {t("dateTime.sunglasses")}
             </TextDraw>
           </div>
 
           <div className="space-y-1 flex flex-col items-start">
             <div className="flex items-center ">
-              <AnimatedIcon Icon={MapPin} delay={7} />
-              <TextDraw delay={7} duration={1.5} size="xl">
-                {WEDDING_CONFIG.location}
+              <AnimatedIcon Icon={MapPin} delay={8.5} />
+              <TextDraw delay={8.5} duration={1.5} size="xl">
+                {t("dateTime.location")}
               </TextDraw>
             </div>
             <TextDraw
-              delay={8}
+              delay={9.5}
               duration={1}
               size="lg"
               className="text-gray-400 ml-7 text-left"
             >
-              {WEDDING_CONFIG.address}
+              {t("dateTime.address")}
             </TextDraw>
           </div>
         </div>
@@ -69,14 +78,14 @@ export default function DateTimeStep({ onNext }: DateTimeStepProps) {
         <Button
           onClick={onNext}
           autoProgress={true}
-          autoProgressDelay={8000}
+          autoProgressDelay={9500}
           autoProgressDuration={6000}
           onAutoComplete={onNext}
           variant="primary"
           size="md"
         >
-          <TextDraw delay={9} duration={1.5} size="lg" className="">
-            Continuar
+          <TextDraw delay={11} duration={1.5} size="lg" className="">
+            {t("common.continue")}
           </TextDraw>
         </Button>
       </div>
