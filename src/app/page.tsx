@@ -18,7 +18,7 @@ function InvitationContent() {
   const { t } = useTranslation();
   const code = useSearchParams().get("code");
   const [isLoading, setIsLoading] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(2);
   const [invitation, setInvitation] = useState<Invitation | null>(null);
   const [error, setError] = useState<string | null>(null);
   const musicRef = useRef<BackgroundMusicRef>(null);
@@ -120,11 +120,7 @@ function InvitationContent() {
         return <DateTimeStep onNext={handleNext} onPrevious={handlePrevious} />;
       case 3:
         return (
-          <ConfirmationStep
-            onConfirm={handleConfirm}
-            maxGuests={invitation?.guests || 1}
-            guestName={invitation?.name || ""}
-          />
+          <ConfirmationStep onConfirm={handleConfirm} invitation={invitation} />
         );
       case 4:
         return (

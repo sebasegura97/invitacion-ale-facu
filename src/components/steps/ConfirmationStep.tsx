@@ -8,17 +8,16 @@ import AnimatedIcon from "@/components/AnimatedIcon";
 import ConfirmationForm from "@/components/ConfirmationForm";
 import InvitationView from "@/components/InvitationView";
 import { useTranslation } from "@/i18n/context";
+import { Invitation } from "@/lib/db";
 
 interface ConfirmationStepProps {
   onConfirm: (data: { confirmed: number; message?: string }) => Promise<void>;
-  maxGuests: number;
-  guestName: string;
+  invitation: Invitation | null;
 }
 
 export default function ConfirmationStep({
   onConfirm,
-  maxGuests,
-  guestName,
+  invitation,
 }: ConfirmationStepProps) {
   const { t } = useTranslation();
   const [showInvitationView, setShowInvitationView] = useState(false);
@@ -27,8 +26,8 @@ export default function ConfirmationStep({
     return (
       <InvitationView
         invitation={{
-          name: guestName,
-          quantity: maxGuests - 1,
+          name: invitation?.name || "",
+          quantity: invitation?.guests || 0,
         }}
         onBack={() => setShowInvitationView(false)}
       />
@@ -59,7 +58,7 @@ export default function ConfirmationStep({
 
       <ConfirmationForm
         onConfirm={onConfirm}
-        maxGuests={maxGuests}
+        maxGuests={invitation?.guests || 0}
         onShowInvitation={() => setShowInvitationView(true)}
       />
     </motion.div>

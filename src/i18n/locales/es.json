@@ -24,13 +24,13 @@
     "time": "Desde las 17:30hs",
     "location": "Hosteria la Caldera",
     "address": "Santa Mónica s/n, La Caldera, Salta",
-    "dressCode": "Elegante Sport",
-    "sunglasses": "Traé tus mejores lentes de sol!"
+    "dressCode": "Elegante Sport con onda",
+    "sunglasses": "Traé tus lentes más divertidos para la fiesta 😎!"
   },
   "confirmation": {
     "title": "Confirma tu Asistencia",
     "expiresOn": "expira el",
-    "deadline": "7 de noviembre de 2025",
+    "deadline": "12 de noviembre de 2025",
     "guestsConfirmed": "Invitados confirmados",
     "of": "de",
     "messageLabel": "Mensaje para los novios",

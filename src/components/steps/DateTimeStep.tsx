@@ -48,9 +48,14 @@ export default function DateTimeStep({ onNext }: DateTimeStepProps) {
             </TextDraw>
           </div>
 
-          <div className="flex items-center ml-4 ">
+          <div className="flex items-center ">
             <AnimatedIcon Icon={Glasses} delay={7} />
-            <TextDraw delay={7} duration={1.5} size="xl">
+            <TextDraw
+              delay={7}
+              duration={1.5}
+              size="lg"
+              className="text-left text-gray-400"
+            >
               {t("dateTime.sunglasses")}
             </TextDraw>
           </div>

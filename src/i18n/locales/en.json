@@ -24,13 +24,13 @@
     "time": "From 5:30 PM",
     "location": "Hosteria la Caldera",
     "address": "Santa Mónica s/n, La Caldera, Salta",
-    "dressCode": "Smart Casual",
-    "sunglasses": "Bring your best sunglasses!"
+    "dressCode": "Smart casual with a fun twist",
+    "sunglasses": "Bring your most hilarious sunglasses for the party! 😎"
   },
   "confirmation": {
     "title": "Confirm Your Attendance",
     "expiresOn": "expires on",
-    "deadline": "November 7, 2025",
+    "deadline": "November 12, 2025",
     "guestsConfirmed": "Confirmed guests",
     "of": "of",
     "messageLabel": "Message for the couple",

@@ -85,7 +85,7 @@ export default function InvitationView({
           >
             {t("invitation.inviteText")}
           </h1>
-          {invitation.quantity > 0 && (
+          {invitation.quantity > 1 && (
             <p
               className="text-lg text-wedding-text/80 font-cursive"
               style={{
