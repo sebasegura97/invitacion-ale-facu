@@ -18,7 +18,7 @@ function InvitationContent() {
   const { t } = useTranslation();
   const code = useSearchParams().get("code");
   const [isLoading, setIsLoading] = useState(false);
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(0);
   const [invitation, setInvitation] = useState<Invitation | null>(null);
   const [error, setError] = useState<string | null>(null);
   const musicRef = useRef<BackgroundMusicRef>(null);
