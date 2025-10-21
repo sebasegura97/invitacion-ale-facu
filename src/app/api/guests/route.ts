@@ -4,6 +4,7 @@ import {
   confirmInvitation,
   createInvitationsTable,
   getAllInvitations,
+  resetInvitationConfirmation,
 } from "@/lib/db";
 
 export async function GET(request: NextRequest) {
@@ -45,10 +46,24 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { code, confirmed, message, declined } = body;
+    const { code, confirmed, message, declined, reset } = body;
 
     if (!code) {
       return NextResponse.json({ error: "Code is required" }, { status: 400 });
+    }
+
+    // Si es un reset, resetear la confirmación
+    if (reset === true) {
+      const result = await resetInvitationConfirmation(code);
+
+      if (!result) {
+        return NextResponse.json(
+          { error: "Failed to reset invitation" },
+          { status: 500 }
+        );
+      }
+
+      return NextResponse.json(result);
     }
 
     if (confirmed === undefined || confirmed === null) {

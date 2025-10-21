@@ -46,7 +46,9 @@
     "giftMessage": "Sientete libre de aportar lo que quieras a nuestra boda.",
     "cashPreference": "Si se preguntan, preferimos efectivo 🤭",
     "viewInvitation": "Ver invitación",
-    "viewAccounts": "Cuentas bancarias"
+    "viewAccounts": "Cuentas bancarias",
+    "changeToDecline": "No podré asistir",
+    "changeToConfirm": "Podré asistir"
   },
   "bankAccounts": {
     "title": "Datos para transferencias",

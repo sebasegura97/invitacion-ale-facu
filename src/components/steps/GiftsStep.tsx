@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gift, Wallet, Mail } from "lucide-react";
+import { Gift, Wallet, Mail, XCircle, CheckCircle } from "lucide-react";
 import TextDraw from "../TextDraw";
 import AnimatedIcon from "../AnimatedIcon";
 import Button from "../ui/Button";
@@ -17,12 +17,14 @@ interface GiftStepProps {
   confirmed: boolean;
   declined: boolean;
   invitationData?: Invitation | null;
+  onChangeAttendance: () => void;
 }
 
 export default function GiftsStep({
   confirmed,
   declined,
   invitationData,
+  onChangeAttendance,
 }: GiftStepProps) {
   const { t } = useTranslation();
   const [currentView, setCurrentView] = useState<View>("main");
@@ -56,7 +58,7 @@ export default function GiftsStep({
             exit={{ opacity: 0, y: -20 }}
             className="p-8 rounded-lg  flex flex-col gap-4"
           >
-            {confirmed && (
+            {!declined && (
               <TextDraw
                 delay={0.5}
                 duration={2}
@@ -64,17 +66,6 @@ export default function GiftsStep({
                 className="text-center gray-300"
               >
                 {t("gifts.thanksConfirmed")}
-              </TextDraw>
-            )}
-
-            {declined && (
-              <TextDraw
-                delay={0.5}
-                duration={2}
-                size="md"
-                className="text-center gray-300"
-              >
-                {t("gifts.sorryDeclined")}
               </TextDraw>
             )}
 
@@ -91,7 +82,7 @@ export default function GiftsStep({
                 size="3xl"
                 className="text-center"
               >
-                {t("gifts.mainMessage")}
+                {declined ? t("gifts.sorryDeclined") : t("gifts.giftMessage")}
               </TextDraw>
             )}
 
@@ -135,6 +126,20 @@ export default function GiftsStep({
             >
               <TextDraw delay={8} duration={1} size="lg">
                 {t("gifts.viewAccounts")}
+              </TextDraw>
+            </Button>
+
+            <Button
+              onClick={onChangeAttendance}
+              size="md"
+              className="flex justify-center items-center mx-auto h-12"
+              icon={!declined ? XCircle : CheckCircle}
+              delayIconAnimation={8.5}
+            >
+              <TextDraw delay={9} duration={1} size="lg">
+                {!declined
+                  ? t("gifts.changeToDecline")
+                  : t("gifts.changeToConfirm")}
               </TextDraw>
             </Button>
           </motion.div>

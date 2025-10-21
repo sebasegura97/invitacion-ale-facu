@@ -104,6 +104,38 @@ function InvitationContent() {
     }
   };
 
+  const handleChangeAttendance = async () => {
+    if (!invitation) return;
+
+    try {
+      // Resetear la confirmación en la base de datos
+      const response = await fetch("/api/guests", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: invitation.code,
+          reset: true,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to reset invitation");
+      }
+
+      const result = await response.json();
+      setInvitation(result);
+
+      // Volver al paso de confirmación
+      setCurrentStep(3);
+    } catch (error) {
+      console.error("Error resetting invitation:", error);
+      // Aún así volver al paso de confirmación para permitir corrección manual
+      setCurrentStep(3);
+    }
+  };
+
   const renderCurrentStep = () => {
     switch (currentStep) {
       case 0:
@@ -128,6 +160,7 @@ function InvitationContent() {
             invitationData={invitation}
             confirmed={invitation?.confirmed_at !== null}
             declined={invitation?.declined || false}
+            onChangeAttendance={handleChangeAttendance}
           />
         );
       default:

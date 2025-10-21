@@ -46,7 +46,9 @@
     "giftMessage": "Feel free to contribute whatever you wish to our wedding.",
     "cashPreference": "If you're wondering, we prefer cash 🤭",
     "viewInvitation": "View invitation",
-    "viewAccounts": "Bank accounts"
+    "viewAccounts": "Bank accounts",
+    "changeToDecline": "Can't attend",
+    "changeToConfirm": "Can attend"
   },
   "bankAccounts": {
     "title": "Transfer information",

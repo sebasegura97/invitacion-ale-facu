@@ -54,6 +54,27 @@ export async function confirmInvitation(
   }
 }
 
+export async function resetInvitationConfirmation(
+  code: string
+): Promise<Invitation | null> {
+  try {
+    const rows = await sql`
+      UPDATE invitations 
+      SET confirmed = 0,
+          message = NULL,
+          confirmed_at = NULL,
+          declined = FALSE
+      WHERE code = ${code.toUpperCase()}
+      RETURNING *
+    `;
+
+    return (rows[0] as Invitation) || null;
+  } catch (error) {
+    console.error("Error resetting invitation:", error);
+    return null;
+  }
+}
+
 export async function getAllInvitations(): Promise<Invitation[]> {
   try {
     const rows = await sql`SELECT * FROM invitations ORDER BY name`;
