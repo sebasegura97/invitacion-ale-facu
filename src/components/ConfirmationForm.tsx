@@ -23,7 +23,7 @@ export default function ConfirmationForm({
 }: ConfirmationFormProps) {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({
-    guestCount: 1,
+    guestCount: maxGuests,
     message: "",
     declined: false,
   });
@@ -117,7 +117,7 @@ export default function ConfirmationForm({
               name="guestCount"
               min="1"
               max={maxGuests}
-              defaultValue={maxGuests}
+              value={formData.guestCount}
               onChange={handleChange}
               className="w-12 px-2 py-2 border-b-2 border-wedding-text/30 bg-transparent text-wedding-text text-center font-cursive transition-all outline-none hover:border-wedding-text/50 focus:border-wedding-text active:border-wedding-text"
               style={{
