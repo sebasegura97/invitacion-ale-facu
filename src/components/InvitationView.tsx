@@ -93,8 +93,8 @@ export default function InvitationView({
                   "var(--font-dancing-script), 'Dancing Script', 'Brush Script MT', cursive",
               }}
             >
-              {t("invitation.andYou")} {invitation.quantity}{" "}
-              {invitation.quantity === 1
+              {t("invitation.andYou")} {invitation.quantity - 1}{" "}
+              {invitation.quantity - 1 === 1
                 ? t("invitation.companion")
                 : t("invitation.companions")}
             </p>
